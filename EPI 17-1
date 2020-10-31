@@ -1,0 +1,34 @@
+import java.util.*;
+import java.io.*;
+public class HelloWorld{
+
+     public static void main(String []args)throws IOException{
+        System.out.println("Hello World");
+        BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+        int n=Integer.parseInt(br.readLine());
+        Map<Integer,Integer> map =new HashMap<>();
+        
+        System.out.println(findWays(n,map));
+     }
+     public static int findWays(int n,Map<Integer,Integer> map)
+     {
+         //base conditions
+         if(n==2 || n==3 || n==7)
+         return 1;
+         
+         if(n<0)
+         return 0;
+         //we have to calculte the number of ways that we can make the number 
+         //System.out.println(n);
+         //we can also try to memoize this solution
+         //right now the complexity is of 3T(n/3)+T(1)
+         if(map.containsKey(n))
+         return map.get(n);
+         else
+         {
+         int calc=findWays(n-2,map)+findWays(n-3,map)+findWays(n-7,map);
+         map.put(n,calc);
+         return map.get(n);
+         }
+     }
+}
